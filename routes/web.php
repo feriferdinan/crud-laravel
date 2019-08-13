@@ -23,4 +23,9 @@
 Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 
-Route::resource('mahasiswa', 'MahasiswaController');
+Route::get('/mahasiswa', 'MahasiswaController@index');
+
+Route::get('/students', 'StudentController@index');
+Route::get('/students/create', 'StudentController@create');
+Route::post('/students', 'StudentController@store');
+Route::get('/students/{student}', 'StudentController@show');

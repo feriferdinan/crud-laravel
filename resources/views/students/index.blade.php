@@ -1,46 +1,26 @@
 @extends('layout.main')
 
-@section('title','Mahasiswa')
+@section('title','Student')
 
 @section('container')
 		<div class="container">
 			<div class="row">
-				<div class="col-10">
-    				<h1 class="mt-3">Daftar Mahasiswa</h1>
-							@if (\Session::has('success'))
+				<div class="col-6">
+    				<h1 class="mt-3">Student</h1>
+							@if (\Session::has('status'))
 					      <div class="alert alert-success">
-					        <p>{{ \Session::get('success') }}</p>
+					        <p>{{ \Session::get('status') }}</p>
 					      </div><br />
 					     @endif
-					<a href="" class="btn btn-success mt-2 mb-2" data-toggle="modal" data-target="#exampleModal">Tambah Data Mahasiswa</a>
-
-    				<table class="table">
-    					<thead class="thead-dark">
-    						<tr>
-	    						<th scope="col">#</th>
-	    						<th scope="col">Nama</th>
-	    						<th scope="col">NRP</th>
-	    						<th scope="col">Email</th>
-	    						<th scope="col">Jurusan</th>
-	    						<th scope="col">Aksi</th>
-    						</tr>
-    					</thead>
-    					<tbody>
-    						@foreach( $mahasiswa as $mhs )
-    						<tr>
-    							<th scope="row">{{ $loop->iteration }}</th>
-    							<th >{{$mhs->nama}}</th>
-    							<th >{{$mhs->nrp}}</th>
-    							<th >{{$mhs->email}}</th>
-    							<th >{{$mhs->jurusan}}</th>
-    							<th >
-    								<a href="" class="badge badge-success">edit</a>
-    								<a href="" class="badge badge-danger">delete</a>
-    							</th>
-    						</tr>
-    						@endforeach
-    					</tbody>
-    				</table>
+					<a href="/students/create" class="btn btn-success mt-2 mb-2" >Tambah Data Mahasiswa</a>
+    				<ul class="list-group">
+                    @foreach($students as $student)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{$student->nama}}
+                            <a href="/students/{{$student->id}}" class="badge badge-info">detail</a>
+                        </li>
+                    @endforeach
+                    </ul>
 				</div>
 			</div>
 		</div>
