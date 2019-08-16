@@ -52,7 +52,7 @@ class StudentController extends Controller
         // ]);
         $request->validate([
             'nama' => 'required',
-            'nrp' => 'required|size:9|numeric',
+            'nrp' => 'required|numeric',
             'email' => 'required|regex:/^.+@.+$/i',
             'jurusan' => 'required'
         ]);
@@ -78,9 +78,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-        //
+        return view('students.edit',compact('student'));
     }
 
     /**
@@ -90,9 +90,22 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'nrp' => 'required|numeric',
+            'email' => 'required|regex:/^.+@.+$/i',
+            'jurusan' => 'required'
+        ]);
+        Student::where('id', $student->id)
+        ->update([
+            'nama' => $request->nama,
+            'nrp' => $request->nrp,
+            'email' => $request->email,
+            'jurusan' => $request->jurusan
+        ]);
+        return redirect('/students')->with('status', 'Data Student Updated');
     }
 
     /**
@@ -101,8 +114,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Student $student)
     {
-        //
+        Student::destroy($student->id);       
+        return redirect('/students')->with('status', 'Data Student Deleted');
     }
 }
